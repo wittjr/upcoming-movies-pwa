@@ -1,0 +1,25 @@
+.provider_image {
+    width: 75px;
+    padding: 10px;
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    display: none;
+}
+
+.tooltip:hover:before {
+    display: block;
+    z-index: 1;
+}

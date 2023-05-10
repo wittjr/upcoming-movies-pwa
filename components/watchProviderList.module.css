@@ -1,0 +1,19 @@
+.provider_section {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    /* max-width: 250px; */
+    justify-content: center;
+    align-content: flex-start;
+    /* padding: 10px; */
+}
+
+.provider_title {
+    width: 100%;
+    text-transform: capitalize;
+    font-size: larger;
+    font-weight: 700;
+    text-align: center;
+    padding: 10px;
+    border-style: solid none none none;
+}
