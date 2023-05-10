@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Layout from "../components/layout"
-import Head from 'next/head'
-import Header from '@components/header'
-import Footer from '@components/footer'
-import Modal from '@components/modal'
+import Layout from "@components/layout"
+// import Head from 'next/head'
+// import Header from '@components/header'
+// import Footer from '@components/footer'
+// import Modal from '@components/modal'
 
 export default function Home() {
     const [showModal, setShowModal] = useState(false);
