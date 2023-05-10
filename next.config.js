@@ -1,5 +1,6 @@
 const withPWA = require('next-pwa')({
     dest: 'public',
+    output: 'standalone',
     // swSrc: 'service-worker.js'
     // register: true,
     // skipWaiting: true,
@@ -7,5 +8,5 @@ const withPWA = require('next-pwa')({
 
 module.exports = withPWA({
     // next.js config
-    output: 'standalone'
+    
 })
