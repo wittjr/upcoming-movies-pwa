@@ -90,7 +90,7 @@ export default function Movie(props) {
                         {keep_dates.map(d => (
                             <ul key={d.release_date + '-' + d.type} className={styles.list}>
                                 <li>Type: {release_types[d.type]}</li>
-                                <li>Date: {dayjs(d.release_date).format('YYYY-MM-DD')}</li>
+                                <li>Date: {dayjs(d.release_date.split('T')[0]).format('YYYY-MM-DD')}</li>
                                 <li>Rating: {d.certification}</li>
                             </ul>
                         ))}
