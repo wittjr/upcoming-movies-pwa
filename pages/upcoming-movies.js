@@ -21,7 +21,7 @@ export default function MoviesPage() {
     }, [content])
 
     const fetchData = async () => {
-        var url = `/api/movies/nowplaying`
+        var url = `/api/movies/upcoming`
         if (month) {
             url += `?month=${month}`
         }
@@ -48,6 +48,14 @@ export default function MoviesPage() {
         month = month + 1
         setMonth(month)
         fetchData()
+    }
+
+    const isCurrentMonth = () => {
+        var today = dayjs()
+        if (today.month() == month) {
+            return true
+        }
+        return undefined
     }
 
     return (
@@ -82,7 +90,8 @@ export default function MoviesPage() {
                     // })
                 }
             </div>
-            <button onClick={prevMonth}>Previous Month</button><button onClick={nextMonth}>Next Month</button>
+            {!isCurrentMonth() && (<button onClick={prevMonth}>Previous Month</button>)}
+            <button onClick={nextMonth}>Next Month</button>
         </Layout>
     )
 }

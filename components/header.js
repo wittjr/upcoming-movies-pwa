@@ -71,7 +71,7 @@ export default function Header() {
             <Link href="/">Home</Link>
           </li>
           <li className={styles.navItem}>
-            <Link href="/movies">Movies</Link>
+            <Link href="/upcoming-movies">Upcoming Movies</Link>
           </li>
           <li className={styles.navItem}>
             <Link href="/tv">TV</Link>

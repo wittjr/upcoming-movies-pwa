@@ -44,15 +44,15 @@ export default function Movie(props) {
     var today = dayjs()
     var after = today.subtract(1, 'week').day(1).format('YYYY-MM-DD')
     var before = today.add(8, 'week').day(5).format('YYYY-MM-DD')
-    console.log(after)
-    console.log(before)
+    // console.log(after)
+    // console.log(before)
 
     const provider_types = ['flatrate', 'buy', 'rent']
 
     const release_types = ['', '', 'Theatrical (Limited)', 'Theatrical', 'Digital']
 
     if (data) {
-        console.log(data.title)
+        // console.log(data.title)
         // console.log(data)
         // if (data['watch/providers'].results.US) {
         //     console.log(data.title)
@@ -64,7 +64,7 @@ export default function Movie(props) {
         if (data.release_dates.length > 0) {
             var keep_dates = []
             for (let i=0; i<data.release_dates.length; i++) {
-                console.log(dayjs(data.release_dates[i].release_date).format('YYYY-MM-DD'))
+                // console.log(dayjs(data.release_dates[i].release_date).format('YYYY-MM-DD'))
                 if (dayjs(data.release_dates[i].release_date).isBetween(after, before, null, [])) {
                     keep_dates.push(structuredClone(data.release_dates[i]))
                 }
