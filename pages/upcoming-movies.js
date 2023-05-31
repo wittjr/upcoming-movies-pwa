@@ -11,6 +11,10 @@ export default function MoviesPage() {
         var today = dayjs()
         return today.month()
     })
+    const [initialMonth, setInitialMonth] = useState(() => {
+        var today = dayjs()
+        return today.month()
+    })
 
     useEffect(() => {
         fetchData()
@@ -29,7 +33,13 @@ export default function MoviesPage() {
         const res = await fetch(url)
         const json = await res.json()
         if (json.content) {
+            if (json.content.length == 0) {
+                initialMonth = initialMonth + 1
+                setInitialMonth(initialMonth)
+                nextMonth()
+            }
             setContent(json.content)
+            console.log(json)
             var dates = Object.keys(json.content)
             // console.log(dates)
             dates.sort()
@@ -51,8 +61,7 @@ export default function MoviesPage() {
     }
 
     const isCurrentMonth = () => {
-        var today = dayjs()
-        if (today.month() == month) {
+        if (initialMonth == month) {
             return true
         }
         return undefined

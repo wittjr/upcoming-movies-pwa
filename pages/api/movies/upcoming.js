@@ -36,11 +36,16 @@ export default async function handler(req, res) {
     // console.log(after.day(3).format('YYYY-MM-DD'))
     // console.log(after.day(1).format('YYYY-MM-DD'))
     // console.log(after.day(5).format('YYYY-MM-DD'))
-    var last_day_of_month = days_in_months[after.month()]
-    if (after.isLeapYear() && after.month() == 2) {
+    var before = after
+    var last_day_of_month = days_in_months[before.month()]
+    // if (last_day_of_month - after.date() <= 6) {
+    //     before = before.add(1, 'month')
+    //     last_day_of_month = days_in_months[before.month()]
+    // }
+    if (before.isLeapYear() && before.month() == 2) {
         last_day_of_month = 29
     }
-    var before = after.date(last_day_of_month)
+    before = before.date(last_day_of_month)
     // console.log(after.format('YYYY-MM-DD'))
     // console.log(before.format('YYYY-MM-DD'))
     // today.setHours(0,0,0,0);
