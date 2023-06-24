@@ -9,9 +9,7 @@ export default function Home() {
     const [showModal, setShowModal] = useState(false);
 
     return (
-        <Layout>
         <p>Welcome</p>
-      </Layout>
         // <div className="container">
         //     <Head>
         //         <title>Next.js Starter!</title>

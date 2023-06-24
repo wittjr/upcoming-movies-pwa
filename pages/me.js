@@ -24,12 +24,12 @@ export default function MePage() {
     }
 
     return (
-        <Layout>
+        <>
             {
                 content &&
                     <p>{content.user.username}</p>
             }
             <iframe src="/api/me" />
-        </Layout>
+        </>
     )
 }

@@ -2,6 +2,11 @@ import Layout from "../components/layout"
 import Movie from "../components/movie"
 import { useState, useEffect } from "react"
 const dayjs = require('dayjs')
+import dynamic from "next/dynamic"
+// const DB = dynamic(() => import('../lib/db.js'), {ssr: false})
+import { Service } from '../lib/db.js';
+import { MService } from '../lib/movies.js';
+
 
 export default function MoviesPage() {
     // const { data } = useSession()
@@ -9,10 +14,12 @@ export default function MoviesPage() {
     const [releaseDates, setReleaseDates] = useState()
     const [month, setMonth] = useState(() => {
         var today = dayjs()
+        // console.log(`set month ${today.month()}`)
         return today.month()
     })
     const [initialMonth, setInitialMonth] = useState(() => {
         var today = dayjs()
+        // console.log(`set initial month ${today.month()}`)
         return today.month()
     })
 
@@ -25,27 +32,29 @@ export default function MoviesPage() {
     }, [content])
 
     const fetchData = async () => {
-        var url = `/api/movies/upcoming`
-        if (month) {
-            url += `?month=${month}`
+        MService.get(month)
+        MService.get(month+1)
+
+        let start = dayjs().day(2).subtract(7, 'day').day(2)
+        console.log(`Init: ${initialMonth}/${month} Start: ${start.format('YYYY-MM-DD')}`)
+        if (initialMonth != month) {
+            start = dayjs().month(month).date(1)
+            console.log(`Init: ${initialMonth}/${month} Start: ${start.format('YYYY-MM-DD')}`)
         }
-        console.log(url)
-        const res = await fetch(url)
-        const json = await res.json()
-        if (json.content) {
-            if (json.content.length == 0) {
-                initialMonth = initialMonth + 1
-                setInitialMonth(initialMonth)
-                nextMonth()
-            }
-            setContent(json.content)
-            console.log(json)
-            var dates = Object.keys(json.content)
-            // console.log(dates)
-            dates.sort()
-            // console.log(dates)
-            setReleaseDates(dates)
-        }
+        let end = start.date(31)
+        // start = start.day(2)
+        // console.log(start)
+        // start = start.subtract(7, 'day')
+        // start.subtract(7, 'day')
+        // start.day(2)
+        // console.log(end)
+        console.log(`Init: ${initialMonth}/${month} Start: ${start.format('YYYY-MM-DD')} End: ${end.format('YYYY-MM-DD')}`)
+        const query = await Service.getAllMovies(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'))
+        let results = Array.from(new Set(query[0]))
+        // console.log(results)
+        // let details = await Service.getMovies(results)
+        // console.log(details)
+        setContent(results)
     }
 
     const prevMonth = async() => {
@@ -66,9 +75,9 @@ export default function MoviesPage() {
         }
         return undefined
     }
-
+ 
     return (
-        <Layout>
+        <>
             <h1>Upcoming Movies</h1>
             {/* {
                 content &&
@@ -83,7 +92,7 @@ export default function MoviesPage() {
                     content && content.map(movie => {
                         // console.log(movie)
                         return (
-                            <Movie key={movie.id} id={movie.id}></Movie>
+                            <Movie key={movie} id={movie}></Movie>
                         )
                     })
                     // content && releaseDates.map(date => {
@@ -101,6 +110,6 @@ export default function MoviesPage() {
             </div>
             {!isCurrentMonth() && (<button onClick={prevMonth}>Previous Month</button>)}
             <button onClick={nextMonth}>Next Month</button>
-        </Layout>
+        </>
     )
 }

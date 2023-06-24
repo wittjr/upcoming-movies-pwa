@@ -5,7 +5,7 @@ dayjs.extend(isLeapYear)
 const days_in_months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 export default async function handler(req, res) {
-    console.log("api/movies/upcoming");
+    console.log(`api/movies/upcoming?month=${req.query.month}`);
     var { weeks_before, weeks_after, month } = req.query
 
     // console.log(`${weeks_before} ${weeks_after}`)
@@ -23,20 +23,20 @@ export default async function handler(req, res) {
     } else {
         var after = today.month(month || today.month())
         // console.log(`current month ${after.day()}`)
-        if (after.day() > 2) {
-            after.day(2)
-        } else if (after.day() < 2) {
-            // console.log(after.subtract(2, 'day').day(4))
-            after = after.subtract(2, 'day').day(2)
-        }    
     }
+    var before = after
+    if (after.day() > 2) {
+        after.day(2)
+    } else if (after.day() < 2) {
+        // console.log(after.subtract(2, 'day').day(4))
+        after = after.subtract(2, 'day').day(2)
+    }    
     // console.log(after.day(2).format('YYYY-MM-DD'))
     // console.log(after.day(6).format('YYYY-MM-DD'))
     // console.log(after.day(4).format('YYYY-MM-DD'))
     // console.log(after.day(3).format('YYYY-MM-DD'))
     // console.log(after.day(1).format('YYYY-MM-DD'))
     // console.log(after.day(5).format('YYYY-MM-DD'))
-    var before = after
     var last_day_of_month = days_in_months[before.month()]
     // if (last_day_of_month - after.date() <= 6) {
     //     before = before.add(1, 'month')

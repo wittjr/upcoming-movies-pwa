@@ -1,8 +1,9 @@
-import { skipWaiting, clientsClaim } from 'workbox-core';
-import { ExpirationPlugin } from 'workbox-expiration';
-import { NetworkOnly, NetworkFirst, CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
-import { registerRoute, setDefaultHandler, setCatchHandler } from 'workbox-routing';
-import { matchPrecache, precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching';
+import { skipWaiting, clientsClaim } from 'workbox-core'
+import { ExpirationPlugin } from 'workbox-expiration'
+import { NetworkOnly, NetworkFirst, CacheFirst, StaleWhileRevalidate } from 'workbox-strategies'
+import { registerRoute, setDefaultHandler, setCatchHandler } from 'workbox-routing'
+import { matchPrecache, precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching'
+import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 
 skipWaiting();
 clientsClaim();
@@ -119,7 +120,7 @@ registerRoute(
 );
 registerRoute(
   /\/api\/.*$/i,
-  new NetworkFirst({
+  new StaleWhileRevalidate({
     cacheName: 'apis',
     networkTimeoutSeconds: 10,
     plugins: [
@@ -127,6 +128,9 @@ registerRoute(
         maxEntries: 16,
         maxAgeSeconds: 86400,
         purgeOnQuotaError: !0,
+      }),
+      new CacheableResponsePlugin({
+        statuses: [200],
       }),
     ],
   }),
