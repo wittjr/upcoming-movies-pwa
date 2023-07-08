@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react"
 import Layout from "../components/layout"
 import { useState, useEffect } from "react"
 import AccessDenied from "../components/access-denied"
+import { Service } from '../lib/db.js';
 
 export default function MePage() {
     const { data } = useSession()
@@ -23,6 +24,28 @@ export default function MePage() {
         }
     }
 
+    const clearMovies = async() => {
+        const result = await Service.deleteAll('movies')
+        console.log(result)
+    }
+
+    const clearDatabase = async() => {
+        const result = await Service.reset()
+        console.log(result)
+        const DBDeleteRequest = window.indexedDB.deleteDatabase("upcoming")
+        console.log(DBDeleteRequest)
+
+        DBDeleteRequest.onerror = (event) => {
+            console.error("Error deleting database.");
+        };
+
+        DBDeleteRequest.onsuccess = (event) => {
+            console.log("Database deleted successfully");
+            console.log(event.result); // should be undefined
+        };
+    }
+
+
     return (
         <>
             {
@@ -30,6 +53,8 @@ export default function MePage() {
                     <p>{content.user.username}</p>
             }
             <iframe src="/api/me" />
+            <button onClick={clearMovies}>Clear Movie Data</button>
+            <button onClick={clearDatabase}>Delete Database</button>
         </>
     )
 }

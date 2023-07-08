@@ -39,22 +39,21 @@ async function handler(req, res) {
                 'trakt-api-key': process.env.TRAKT_ID
             }
         })
-        if (!response.ok) {
-            throw new Error('API Issue')
-        }
+        // console.log(response)
 
+        const json = await response.json()
 
         // console.log(response)
         // console.log(response.headers)
         // console.log(response.body)
-        const { body } = response
+        // const { body } = response
         // console.log('Returning body')
         // console.log(JSON.parse(body))
         // res.status(200).setHeader('Content-Type', 'application/json').json(JSON.parse(body))
 
         return res.send({
             content:
-                JSON.parse(body),
+                json,
         })
     }
 

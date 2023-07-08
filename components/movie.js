@@ -10,19 +10,19 @@ dayjs.extend(isBetween)
 dayjs.extend(isSameOrBefore)
 
 export default function Movie(props) {
-    const [data, setData] = useState(null)
+    const [data, setData] = useState(props.data)
 
-    useEffect(() => {
-        const fetchData = async () => {
-            let newData = await Service.getMovie(props.id)
-            setData(newData);
-        };
-        fetchData();
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         let newData = await Service.getMovie(props.id)
+    //         setData(newData);
+    //     };
+    //     fetchData();
 
-    }, [props.id]);
+    // }, [props.id]);
 
-    useEffect(() => {
-    }, [data]);
+    // useEffect(() => {
+    // }, [data]);
 
     const ignore = () => {
         let newData = {...data}
@@ -37,8 +37,8 @@ export default function Movie(props) {
 
     const release_types = ['', '', 'Theatrical (Limited)', 'Theatrical', 'Digital']
 
-    if (data && data.ignore != true && data.runtime >= 60) {
-        console.log(data)
+    if (data && data.ignore != true) {
+        // console.log(data)
         if (data.poster_path) {
             poster_path = 'https://image.tmdb.org/t/p/original/' + data.poster_path
         }
