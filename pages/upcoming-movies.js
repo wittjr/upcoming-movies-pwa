@@ -35,13 +35,17 @@ export default function MoviesPage() {
         MService.get(month)
         MService.get(month+1)
 
-        let start = dayjs().day(2).subtract(7, 'day').day(2)
+        let start = dayjs()
+        let end = dayjs()
         console.log(`Init: ${initialMonth}/${month} Start: ${start.format('YYYY-MM-DD')}`)
         if (initialMonth != month) {
             start = dayjs().month(month).date(1)
+            end = start.date(31)
             console.log(`Init: ${initialMonth}/${month} Start: ${start.format('YYYY-MM-DD')}`)
+        } else {
+            start = dayjs().day(2).subtract(7, 'day').day(2)
+            end = dayjs().date(31)
         }
-        let end = start.date(31)
         // start = start.day(2)
         // console.log(start)
         // start = start.subtract(7, 'day')
