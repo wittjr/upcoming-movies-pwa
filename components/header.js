@@ -74,12 +74,6 @@ export default function Header() {
             <Link href="/upcoming-movies">Upcoming Movies</Link>
           </li>
           <li className={styles.navItem}>
-            <Link href="/tv">TV</Link>
-          </li>
-          <li className={styles.navItem}>
-            <Link href="/lists">Lists</Link>
-          </li>
-          <li className={styles.navItem}>
             <Link href="/me">Me</Link>
           </li>
         </ul>
