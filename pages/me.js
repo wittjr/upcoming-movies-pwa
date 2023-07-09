@@ -5,14 +5,19 @@ import AccessDenied from "../components/access-denied"
 import { Service } from '../lib/db.js';
 
 export default function MePage() {
-    const { data } = useSession()
+    const { data, status } = useSession()
     const [content, setContent] = useState()
 
     useEffect(() => {
+        console.log('DATA')
+        console.log(data)
+        console.log('STATUS')
+        console.log(status)
         fetchData()
     }, [])
 
     useEffect(() => {
+        console.log('CONTENT')
         console.log(content)
     }, [content])
 
@@ -58,3 +63,5 @@ export default function MePage() {
         </>
     )
 }
+
+MePage.auth = true
