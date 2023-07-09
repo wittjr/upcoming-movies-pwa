@@ -10,4 +10,4 @@ export default withAuth({
     },
   })
 
-export const config = { matcher: ['/me', '/lists'] }
+export const config = { matcher: ['/me'] }
