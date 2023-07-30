@@ -131,14 +131,8 @@ export default function MoviesPage() {
     return (
         <>
             <h1>Upcoming Movies</h1>
-            {/* {
-                content &&
-                <h1>Titles: {content.length}</h1>
-
-            } */}
-            {
-                // console.log(releaseDates)
-            }
+            {!isCurrentMonth() && (<button onClick={prevMonth}>Previous Month</button>)}
+            <button onClick={nextMonth}>Next Month</button>
             <div className="movie-section">
                 {
                     content && content.map(movie => {

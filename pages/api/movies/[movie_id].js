@@ -1,6 +1,6 @@
 export async function getMovieDetails(movie_id) {
     var url = `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.TMDB_ID}&language=en-US&append_to_response=release_dates%2Cwatch%2Fproviders`
-    // console.log(`Calling: ${url}`)
+    console.log(`Calling: ${url}`)
     const response = await fetch(url)
     if (!response.ok) {
         throw new Error('API Issue')
@@ -19,7 +19,7 @@ export async function getMovieDetails(movie_id) {
 
 async function handler(req, res) {
     const { movie_id } = req.query
-    // console.log(`api/movies/${movie_id}`)
+    console.log(`api/movies/${movie_id}`)
     const data = await getMovieDetails(movie_id)
     // console.log(data)
     res.setHeader('Cache-Control', 's-maxage=86400')
