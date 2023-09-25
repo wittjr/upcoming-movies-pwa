@@ -1,24 +1,25 @@
 import { useSession } from "next-auth/react"
-import Layout from "../components/layout"
+import Layout from "@components/layout"
 import { useState, useEffect } from "react"
-import AccessDenied from "../components/access-denied"
-import { Service } from '../lib/db.js';
+import AccessDenied from "@components/access-denied"
+import { Service } from '@lib/db.js';
+import { Logger } from '@lib/clientLogger.js'
 
 export default function MePage() {
     const { data, status } = useSession()
     const [content, setContent] = useState()
 
     useEffect(() => {
-        console.log('DATA')
-        console.log(data)
-        console.log('STATUS')
-        console.log(status)
+        // Logger.log('DATA')
+        // Logger.log(data)
+        // Logger.log('STATUS')
+        // Logger.log(status)
         fetchData()
     }, [])
 
     useEffect(() => {
-        console.log('CONTENT')
-        console.log(content)
+        // Logger.log('CONTENT')
+        // Logger.log(content)
     }, [content])
 
     const fetchData = async () => {
@@ -31,22 +32,22 @@ export default function MePage() {
 
     const clearMovies = async() => {
         const result = await Service.deleteAll('movies')
-        console.log(result)
+        Logger.log(result)
     }
 
     const clearDatabase = async() => {
         const result = await Service.reset()
-        console.log(result)
+        Logger.log(result)
         const DBDeleteRequest = window.indexedDB.deleteDatabase("upcoming")
-        console.log(DBDeleteRequest)
+        Logger.log(DBDeleteRequest)
 
         DBDeleteRequest.onerror = (event) => {
-            console.error("Error deleting database.");
+            Logger.error("Error deleting database.");
         };
 
         DBDeleteRequest.onsuccess = (event) => {
-            console.log("Database deleted successfully");
-            console.log(event.result); // should be undefined
+            Logger.log("Database deleted successfully");
+            Logger.log(event.result); // should be undefined
         };
     }
 

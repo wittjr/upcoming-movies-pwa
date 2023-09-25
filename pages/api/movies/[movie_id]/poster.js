@@ -1,6 +1,7 @@
+import { Logger } from '@lib/logger.js';
+
 export default async function handler(req, res) {
     const { movie_id } = req.query
-    console.log(`api/movies/${movie_id}/poster`);
     const response = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.TMDB_ID}&language=en-US`);
     if (!response.ok) {
         throw new Error('API Issue')

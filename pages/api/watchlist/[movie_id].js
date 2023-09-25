@@ -1,11 +1,11 @@
 import { getToken } from 'next-auth/jwt';
 import { getMovieDetails } from '/pages/api/movies/[movie_id]'
+import { Logger } from '@lib/logger.js';
 
 // const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default async function handler(req, res) {
     const { movie_id } = req.query
-    console.log(`api/watchlist/${movie_id}`);
 
     const token = await getToken({ req, encryption: true });
     var results = [];
@@ -34,18 +34,17 @@ export default async function handler(req, res) {
         throw new Error('API Issue')
     }
     var data = await response.json();
-    console.log(data)
 
     // var promises = data.map(async (movie) => {
     //     var movie_details = await getMovieDetails(movie.movie.ids.tmdb)
-    //     // console.log(movie_details)
+    //     // Logger.log(movie_details)
     //     results.push(structuredClone(movie_details));
-    //     // console.log(`Results length: ${results.length}`)
+    //     // Logger.log(`Results length: ${results.length}`)
     // })
     
     // await Promise.all(promises)
 
-    // console.log(`Results: ${JSON.stringify(results)}`);
+    // Logger.log(`Results: ${JSON.stringify(results)}`);
 
     return res.send(data)
 

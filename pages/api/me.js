@@ -2,15 +2,16 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "pages/api/auth/[...nextauth]"
 import { withAuth } from "next-auth/middleware"
 import { getToken } from 'next-auth/jwt';
+import { Logger } from '@lib/logger.js';
 
 async function handler(req, res) {
-    console.log("api/me");
+    Logger.log("api/me");
 
     const session = await getServerSession(req, res, authOptions)
     // const token = await getToken({ req });
     const token = await getToken({ req, encryption: true });
-    console.log(token)
-    console.log(session)
+    // Logger.log(token)
+    // Logger.log(session)
 
     if (session) {
         var date = new Date();
@@ -20,9 +21,9 @@ async function handler(req, res) {
             date.getFullYear(),
         ];
         var today = year + '-' + month + '-' + day
-        console.log(today)
-        // console.log(session)
-        // console.log(JSON.stringify(authOptions) )
+        Logger.log(today)
+        // Logger.log(session)
+        // Logger.log(JSON.stringify(authOptions) )
         // const response = await got.get('https://api.trakt.tv/users/settings', {
         //     headers: {
         //         'Content-Type': 'application/json',
@@ -39,16 +40,16 @@ async function handler(req, res) {
                 'trakt-api-key': process.env.TRAKT_ID
             }
         })
-        // console.log(response)
+        // Logger.log(response)
 
         const json = await response.json()
 
-        // console.log(response)
-        // console.log(response.headers)
-        // console.log(response.body)
+        // Logger.log(response)
+        // Logger.log(response.headers)
+        // Logger.log(response.body)
         // const { body } = response
-        // console.log('Returning body')
-        // console.log(JSON.parse(body))
+        // Logger.log('Returning body')
+        // Logger.log(JSON.parse(body))
         // res.status(200).setHeader('Content-Type', 'application/json').json(JSON.parse(body))
 
         return res.send({

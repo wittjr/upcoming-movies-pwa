@@ -9,4 +9,8 @@ const withPWA = require('next-pwa')({
 module.exports = withPWA({
     // next.js config
     output: 'standalone',
+    webpack(config) {
+        config.experiments = { ...config.experiments, topLevelAwait: true }
+        return config
+    }
 })

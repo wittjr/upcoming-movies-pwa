@@ -3,6 +3,7 @@ import Movie from "../components/movie"
 import { useState, useEffect } from "react"
 import { Service } from '../lib/db.js';
 import { MService } from '../lib/movies.js';
+import { Logger } from '@lib/clientLogger.js';
 
 export default function ListsPage() {
     // const { data } = useSession()
@@ -14,29 +15,29 @@ export default function ListsPage() {
     }, [])
 
     useEffect(() => {
-        // console.log(content)
+        // Logger.log(content)
     }, [content])
 
     const fetchData = async () => {
         // const query = await Service.getAllMovies()
-        // console.log(query)
+        // Logger.log(query)
         // let results = Array.from(new Set(query[0].concat(query[1])))
         const response = await fetch(`/api/lists`)
         if (!response.ok) {
             throw new Error('API Issue')
         }
         const data = await response.json();
-        console.log(data)
-        console.log(data.length)
+        // Logger.log(data)
+        // Logger.log(data.length)
         const movies = []
         for (let i=0; i<data.length; i++) {
-            console.log(data[i])
+            // Logger.log(data[i])
             const response = await fetch(`/api/movies/${data[i].movie.ids.tmdb}`)
             if (!response.ok) {
                 throw new Error('API Issue')
             }
             const movie = await response.json();
-            console.log(movie)
+            // Logger.log(movie.title)
             movies.push(structuredClone(movie))
         }
 
@@ -49,7 +50,7 @@ export default function ListsPage() {
             <div className="movie-section">
                 {
                     content && content.map(movie => {
-                        // console.log(movie)
+                        // Logger.log(`${movie.id}:${movie.title}`)
                         return (
                             <Movie key={movie.id + '-' +  movie.release_date} id={movie.id + '-' +  movie.release_date} data={movie}></Movie>
                         )

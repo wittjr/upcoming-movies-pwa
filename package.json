@@ -9,6 +9,7 @@
     "export": "next export"
   },
   "dependencies": {
+    "@slack/webhook": "^6.1.0",
     "cypress": "^10.0.3",
     "dayjs": "^1.11.9",
     "dayjs-with-plugins": "^1.0.3",

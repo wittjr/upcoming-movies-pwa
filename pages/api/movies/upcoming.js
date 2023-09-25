@@ -1,3 +1,4 @@
+import { Logger } from '@lib/logger.js'
 const dayjs = require('dayjs')
 const isLeapYear = require('dayjs/plugin/isLeapYear')
 dayjs.extend(isLeapYear)
@@ -5,7 +6,7 @@ dayjs.extend(isLeapYear)
 const days_in_months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 export default async function handler(req, res) {
-    console.log(`api/movies/upcoming?month=${req.query.month}`);
+    // Logger.log(`api/movies/upcoming?month=${req.query.month}`);
     var { weeks_before, weeks_after, month } = req.query
 
     // console.log(`${weeks_before} ${weeks_after}`)
@@ -56,7 +57,7 @@ export default async function handler(req, res) {
         // var url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_ID}&language=en-US&region=US&sort_by=release_date.asc&certification_country=US&certification.gte=G&include_adult=false&include_video=false&primary_release_date.gte=${after.format('YYYY-MM-DD')}&primary_release_date.lte=${before.format('YYYY-MM-DD')}&with_release_type=2%7C3&with_original_language=en&page=${page}`
         // var url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_ID}&language=en-US&region=US&sort_by=release_date.asc&certification_country=US&include_adult=false&include_video=false&primary_release_date.gte=${after.format('YYYY-MM-DD')}&primary_release_date.lte=${before.format('YYYY-MM-DD')}&with_release_type=2%7C3&with_original_language=en&page=${page}`
         var url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.TMDB_ID}&language=en-US&region=US&sort_by=release_date.asc&certification_country=US&include_adult=false&include_video=false&release_date.gte=${after.format('YYYY-MM-DD')}&release_date.lte=${before.format('YYYY-MM-DD')}&with_release_type=2%7C3&with_original_language=en&page=${page}`
-        console.log(`Calling: ${url}`)
+        // Logger.log(`Calling: ${url}`)
         var response = await fetch(url)
         if (!response.ok) {
             throw new Error('API Issue')

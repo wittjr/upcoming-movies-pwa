@@ -3,6 +3,7 @@ import styles from './movie.module.css'
 import WatchProviderList from "./watchProviderList"
 import MovieButtons from "./movieButtons"
 import { Service } from '../lib/db.js';
+import { Logger } from '@lib/clientLogger.js';
 
 const dayjs = require('dayjs')
 var isBetween = require('dayjs/plugin/isBetween')
@@ -31,12 +32,13 @@ export default function Movie(props) {
 
     const release_types = ['', '', 'Theatrical (Limited)', 'Theatrical', 'Digital']
 
+    // Logger.log(data)
     if (data && data.ignore != true) {
         // console.log(data)
         if (data.poster_path) {
             poster_path = 'https://image.tmdb.org/t/p/original/' + data.poster_path
         }
-        if (data.release_dates.results.length > 0 && (data.runtime == 0 || data.runtime >=60)) {
+        if (data.release_dates.results.length > 0) {
 
             return (
                 <div className={styles.movie}>

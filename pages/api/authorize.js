@@ -1,9 +1,11 @@
+import { Logger } from '@lib/logger.js';
+
 async function handler(req, res) {
-    console.log("api/authorize");
+    Logger.log("api/authorize");
     // console.log(req)
     const query = req.query
     const {code} = query;
-    console.log(code)
+    Logger.log(code)
 
     const response = await fetch('https://api.trakt.tv/oauth/token', {
         method: 'post',
@@ -16,13 +18,13 @@ async function handler(req, res) {
         }
     });
 
-    console.log(response)
-    console.log(response.status)
-    console.log(response.statusText)
-    console.log(response.headers)
-    console.log(response.body)
+    Logger.log(response)
+    Logger.log(response.status)
+    Logger.log(response.statusText)
+    Logger.log(response.headers)
+    Logger.log(response.body)
     const {body} = response.body
-    console.log('Returning body')
+    Logger.log('Returning body')
     res.status(200).setHeader('Content-Type', 'application/json').json(body)
 }
 

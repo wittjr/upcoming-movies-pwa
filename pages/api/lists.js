@@ -1,19 +1,20 @@
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "pages/api/auth/[...nextauth]"
 import { getToken } from 'next-auth/jwt';
+import { Logger } from '@lib/logger.js';
 
 export default async function handler(req, res) {
-    console.log("api/lists");
+    Logger.log("api/lists");
 
     const session = await getServerSession(req, res, authOptions)
     // const token = await getToken({ req });
     const token = await getToken({ req, encryption: true });
-    console.log(token)
-    console.log(session)
+    // Logger.log(token)
+    // Logger.log(session)
 
     if (session) {
-        // console.log(session)
-        // console.log(JSON.stringify(authOptions) )
+        // Logger.log(session)
+        // Logger.log(JSON.stringify(authOptions) )
         // const response = await got.get('https://api.trakt.tv/users/settings', {
         //     headers: {
         //         'Content-Type': 'application/json',
@@ -37,15 +38,15 @@ export default async function handler(req, res) {
         // var filtered = data.results.filter((movie) => {
         //     return new Date(movie.release_date) >= today
         // })
-        console.log(data)
+        // Logger.log(data)
         // movies.push(...data.results);
     
-        // console.log(response)
-        // console.log(response.headers)
-        // console.log(response.body)
+        // Logger.log(response)
+        // Logger.log(response.headers)
+        // Logger.log(response.body)
         // const { body } = response
-        // console.log('Returning body')
-        // console.log(JSON.parse(body))
+        // Logger.log('Returning body')
+        // Logger.log(JSON.parse(body))
         // res.status(200).setHeader('Content-Type', 'application/json').json(JSON.parse(body))
 
         return res.send([
