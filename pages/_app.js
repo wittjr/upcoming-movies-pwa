@@ -32,8 +32,10 @@ async function registerPeriodicSync() {
         await swRegistration.periodicSync.register("content-periodicSync", {
             minInterval: 10 * 1000,
         });
-    } catch {
+    } catch (e) {
         Logger.log("Periodic Sync could not be registered!");
+        Logger.log(e)
+        Logger.log(e.message)
     }
 }
 
