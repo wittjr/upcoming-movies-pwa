@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import styles from './movie.module.css'
 import WatchProviderList from "./watchProviderList"
 import MovieButtons from "./movieButtons"
-import { Service } from '../lib/db.js';
+// import { DBService } from '@lib/db.js';
 import { Logger } from '@lib/clientLogger.js';
 
 const dayjs = require('dayjs')
@@ -16,7 +16,7 @@ export default function Movie(props) {
 
     // useEffect(() => {
     //     const fetchData = async () => {
-    //         let newData = await Service.getMovie(props.id)
+    //         let newData = await DBService.getMovie(props.id)
     //         setData(newData);
     //     };
     //     fetchData();

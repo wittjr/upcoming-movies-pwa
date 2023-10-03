@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import styles from './movie.module.css'
 import WatchProviderList from "./watchProviderList"
-import { Service } from '../lib/db.js';
+import { DatabaseService } from '@lib/dbService.js';
 
 export default function MovieButtons(props) {
     const [data, setData] = useState(props.data)
@@ -9,7 +9,7 @@ export default function MovieButtons(props) {
     const ignore = () => {
         let newData = {...data}
         newData.ignore = true
-        Service.put('movies', newData)
+        DatabaseService.put('movies', newData)
         props.stateChanger(newData)
     }
     

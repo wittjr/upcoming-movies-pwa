@@ -32,7 +32,9 @@ self.addEventListener("periodicsync", (event) => {
 });
 
 self.addEventListener('fetch', event => {
-    Logger.log(`SW:fetch:${event.target}:${event.type}:${event.request.url}`)
+    if (!event.request.url.endsWith('logs')) {
+        Logger.log(`SW:fetch:${event.target}:${event.type}:${event.request.url}`)
+    }
     // Add in your own criteria here to return early if this
     // isn't a request that should use background sync.
     // if (event.request.method !== 'POST') {

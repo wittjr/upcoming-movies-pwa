@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react"
 import { Logger } from '@lib/clientLogger.js'
 
-const db = dynamic(() => import('@lib/db.js'), { ssr: false })
+const db = dynamic(() => import('@lib/dbService.js'), { ssr: false })
 
 function Auth({ children }) {
     // if `{ required: true }` is supplied, `status` can only be "loading" or "authenticated"

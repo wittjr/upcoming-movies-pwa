@@ -1,12 +1,11 @@
 import Layout from "@components/layout"
 import Movie from "@components/movie"
 import { useState, useEffect } from "react"
-const dayjs = require('dayjs-with-plugins')
 import dynamic from "next/dynamic"
-import { Service } from '@lib/db.js'
+import { DatabaseService } from '@lib/dbService.js'
 import { Logger } from '@lib/clientLogger.js'
-import { MService } from '@lib/movies.js'
-
+import { MovieService } from '@lib/movieService.js'
+const dayjs = require('dayjs-with-plugins')
 
 export default function MoviesPage() {
     // const { data } = useSession()
@@ -40,8 +39,8 @@ export default function MoviesPage() {
     }
 
     const fetchData = async () => {
-        MService.get(month)
-        MService.get(month+1)
+        MovieService.get(month)
+        MovieService.get(month+1)
 
         let start = dayjs().hour(0).minute(0).second(0).millisecond(0)
         let end = dayjs().hour(23).minute(59).second(59).millisecond(999)
@@ -54,21 +53,16 @@ export default function MoviesPage() {
             start = dayjs().day(2).subtract(7, 'day').day(2).hour(0).minute(0).second(0).millisecond(0)
             end = dayjs().date(daysInMonth(dayjs().month(), dayjs().year)).hour(23).minute(59).second(59).millisecond(999)
         }
-        // start = start.day(2)
-        // Logger.log(start)
-        // start = start.subtract(7, 'day')
-        // start.subtract(7, 'day')
-        // start.day(2)
-        // Logger.log(end)
+
         Logger.log(`Init: ${initialMonth}/${month} Start: ${start.format('YYYY-MM-DD')} End: ${end.format('YYYY-MM-DD')}`)
-        const query = await Service.getAllMovies(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'))
+        const query = await DatabaseService.getAllMovies(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'))
         // Logger.log(query)
         let results = Array.from(new Set(query[0].concat(query[1])))
         // Logger.log(results)
 
         let movies = {}
         for (let i=0; i<results.length; i++) {
-            let details = await Service.getMovie(results[i])
+            let details = await DatabaseService.getMovie(results[i])
             // Logger.log(details)
             if ('limited_release_date' in details && (dayjs(details.limited_release_date).isBetween(start, end, null, '[]'))) {
                 if (!(details.limited_release_date in movies)) {
@@ -89,7 +83,7 @@ export default function MoviesPage() {
         }
     
         // Logger.log(movies)
-        // let details = await Service.getMovies(results)
+        // let details = await DatabaseService.getMovies(results)
         // Logger.log(details)
 
         let dates = Object.keys(movies).sort()
@@ -143,17 +137,6 @@ export default function MoviesPage() {
                             <Movie key={movie.id + '-' + movie.release_type + '-' +  movie.release_date} data={movie}></Movie>
                         )
                     })
-                    // content && releaseDates.map(date => {
-                    //     var x = content[date].map(movie => {
-                    //         // Logger.log(movie)
-                    //         if (movie.original_language == 'en') {
-                    //             return (
-                    //                 <Movie key={movie.id} data={movie}></Movie>
-                    //             )
-                    //         }
-                    //     })
-                    //     return x
-                    // })
                 }
             </div>
             {!isCurrentMonth() && (<button onClick={prevMonth}>Previous Month</button>)}

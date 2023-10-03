@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react"
 import Layout from "@components/layout"
 import { useState, useEffect } from "react"
 import AccessDenied from "@components/access-denied"
-import { Service } from '@lib/db.js';
+import { DatabaseService } from '@lib/dbService.js';
 import { Logger } from '@lib/clientLogger.js'
 
 export default function MePage() {
@@ -31,12 +31,12 @@ export default function MePage() {
     }
 
     const clearMovies = async() => {
-        const result = await Service.deleteAll('movies')
+        const result = await DatabaseService.deleteAll('movies')
         Logger.log(result)
     }
 
     const clearDatabase = async() => {
-        const result = await Service.reset()
+        const result = await DatabaseService.reset()
         Logger.log(result)
         const DBDeleteRequest = window.indexedDB.deleteDatabase("upcoming")
         Logger.log(DBDeleteRequest)
