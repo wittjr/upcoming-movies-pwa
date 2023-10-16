@@ -3,9 +3,12 @@ import { ExpirationPlugin } from 'workbox-expiration'
 import { NetworkOnly, NetworkFirst, CacheFirst, StaleWhileRevalidate } from 'workbox-strategies'
 import { registerRoute, setDefaultHandler, setCatchHandler } from 'workbox-routing'
 import { matchPrecache, precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching'
-import { BackgroundSyncPlugin } from 'workbox-background-sync';
+import { BackgroundSyncPlugin } from 'workbox-background-sync'
+import { Queue } from 'workbox-background-sync'
 import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 import { Logger } from '@lib/clientLogger.js'
+import { MovieService } from '@lib/movieService.js'
+import { DatabaseService } from '@lib/dbService.js'
 
 skipWaiting();
 clientsClaim();
@@ -21,6 +24,8 @@ WB_MANIFEST.push({
 precacheAndRoute(WB_MANIFEST);
 // Logger.log('SW: precacheAndRoute')
 
+const queue = new Queue('apiRequestQueue')
+
 cleanupOutdatedCaches();
 
 self.addEventListener("sync", (event) => {
@@ -32,26 +37,41 @@ self.addEventListener("periodicsync", (event) => {
 });
 
 self.addEventListener('fetch', event => {
-    if (!event.request.url.endsWith('logs')) {
-        Logger.log(`SW:fetch:${event.target}:${event.type}:${event.request.url}`)
+    if (event.request.url.endsWith('logs')) {
+        return
     }
-    // Add in your own criteria here to return early if this
-    // isn't a request that should use background sync.
-    // if (event.request.method !== 'POST') {
-    //   return;
-    // }
 
-    // const bgSyncLogic = async () => {
-    //   try {
-    //     const response = await fetch(event.request.clone());
-    //     return response;
-    //   } catch (error) {
-    //     await queue.pushRequest({request: event.request});
-    //     return error;
-    //   }
-    // };
+    Logger.log(`SW:fetch:${event.target}:${event.type}:${event.request.url}`)
+    const bgSyncLogic = async () => {
+        try {
+            const response = await fetch(event.request.clone());
+            return response;
+        } catch (error) {
+            Logger.log(`SW:fetch:queue:${event.target}:${event.type}:${event.request.url}`)
+            await queue.pushRequest({ request: event.request });
+            return error;
+        }
+    };
 
-    // event.respondWith(bgSyncLogic());
+    event.respondWith(bgSyncLogic());
+});
+
+// Refresh data when the app wakes up
+self.addEventListener("activate", (event) => {
+    Logger.log(`SW:activate`)
+    var today = dayjs()
+    let keys = DatabaseService.getAllMovieIDs()
+    keys.map((key) => {
+        Logger.log(`SW:activate:get_movie:${key}`)
+        MovieService.get_movie(key)
+    })
+    Logger.log(`SW:activate:get:${today.month()}`)
+    MovieService.get(today.month())
+    Logger.log(`SW:activate:get_movie_watch_list`)
+    (async () => {
+        await DatabaseService.clearMovieWatchlist()
+        MovieService.get_movie_watch_list()
+    })
 });
 
 const bgSyncPlugin = new BackgroundSyncPlugin('movieUpdates', {
@@ -164,6 +184,7 @@ registerRoute(
         cacheName: 'apis',
         networkTimeoutSeconds: 10,
         plugins: [
+            bgSyncPlugin,
             new ExpirationPlugin({
                 maxEntries: 500,
                 maxAgeSeconds: 86400,

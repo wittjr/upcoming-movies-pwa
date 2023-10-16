@@ -6,7 +6,7 @@ import { Logger } from '@lib/logger.js';
 
 export default async function handler(req, res) {
     const { movie_id } = req.query
-    Logger.log(`api/watchlist/${movie_id}`);
+    Logger.log(`api/watched/${movie_id}`);
 
     const token = await getToken({ req, encryption: true });
     var results = [];

@@ -1,49 +1,68 @@
-import { useState, useEffect } from 'react'
-import styles from './movie.module.css'
-import WatchProviderList from "./watchProviderList"
+import { useState } from 'react'
 import { DatabaseService } from '@lib/dbService.js';
 
 export default function MovieButtons(props) {
     const [data, setData] = useState(props.data)
 
     const ignore = () => {
-        let newData = {...data}
+        let newData = { ...data }
         newData.ignore = true
         DatabaseService.put('movies', newData)
-        props.stateChanger(newData)
+        setData(newData)
     }
-    
+
     const watched = async () => {
-        let newData = {...data}
-        newData.watched = true
-        newData.interested = true
-        const response = await fetch(`/api/watched/${newData.imdb_id}`)
+        let newData = { ...data }
+        newData.watchlist = 0
+        const response = await fetch(`/api/watched/${newData.imdb_id}`, {
+            method: 'POST'
+        })
         if (!response.ok) {
             throw new Error('API Issue')
         }
         const movie = await response.json();
-        props.stateChanger(newData)
+        setData(newData)
     }
-    
+
     const interested = async () => {
-        let newData = {...data}
-        // console.log(newData)
-        newData.interested = true
-        const response = await fetch(`/api/watchlist/${newData.imdb_id}`)
-        if (!response.ok) {
-            throw new Error('API Issue')
+        let newData = { ...data }
+        console.log(data)
+        if (data.watchlist && data.watchlist == 1) {
+            console.log('remove from watchlist')
+            newData.watchlist = 0
+            const response = await fetch(`/api/watchlist/${newData.imdb_id}`, {
+                method: 'DELETE'
+            })
+            if (!response.ok) {
+                throw new Error('API Issue')
+            }
+            // const movie = await response.json();
+        } else {
+            console.log('add to watchlist')
+            newData.watchlist = 1
+            const response = await fetch(`/api/watchlist/${newData.imdb_id}`, {
+                method: 'POST'
+            })
+            if (!response.ok) {
+                throw new Error('API Issue')
+            }
+            // const movie = await response.json();
         }
-        const movie = await response.json();
-        props.stateChanger(newData)
+        console.log(data)
+        DatabaseService.put('movies', newData)
+        setData(newData)
     }
-    
+
     if (data) {
-        // console.log(data)
+        let watchLabel = 'Watchlist+'
+        if (data.watchlist && data.watchlist == 1) {
+            watchLabel = 'Watchlist-'
+        }
         return (
             <>
-                <button className={styles.actionButton} onClick={ignore}>Nope</button>
-                <button className={styles.actionButton} onClick={interested}>Interested</button>
-                <button className={styles.actionButton} onClick={watched}>Watched</button>
+                <button className="actionButton" onClick={ignore}>Ignore</button>
+                <button className="actionButton" onClick={interested}>{watchLabel}</button>
+                <button className="actionButton" onClick={watched}>Watched</button>
             </>
         )
     } else {
