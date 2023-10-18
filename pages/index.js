@@ -3,7 +3,6 @@ import Layout from "@components/layout"
 // import Head from 'next/head'
 // import Header from '@components/header'
 // import Footer from '@components/footer'
-// import Modal from '@components/modal'
 
 export default function Home() {
     const [showModal, setShowModal] = useState(false);
@@ -27,12 +26,6 @@ export default function Home() {
         //         <div id="modal-root"></div>
         //         <div>
         //             <button onClick={() => setShowModal(true)}>Login</button>
-        //             <Modal
-        //                 onClose={() => setShowModal(false)}
-        //                 show={showModal}
-        //             >
-        //                 Hello from the modal!
-        //             </Modal>
         //         </div>
         //     </main>
 

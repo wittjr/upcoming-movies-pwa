@@ -66,10 +66,8 @@ export default function Movie(props) {
                             <span>{data.runtime} minutes</span>
                         }
                     </div>
-                    <div className={styles.movie}>
-                        <div className={styles.row}>
+                    <div className={styles.buttonRow}>
                             <MovieButtons stateChanger={setData} data={data}/>
-                        </div>
                     </div>
                     
                     {data.limited_release_date && (

@@ -4,7 +4,17 @@
     max-width: 250px;
     justify-content: center;
     align-content: flex-start;
-    padding: 10px;
+    /* padding: 10px; */
+}
+
+.buttonRow {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 250px;
+    justify-content: center;
+    align-content: flex-start;
+    padding: 5px 2px;
 }
 
 .poster {
@@ -15,6 +25,8 @@
     font-weight: 700;
     text-align: center;
     min-height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .label {
@@ -28,6 +40,8 @@
     text-align: center;
     padding-top: 5px;
     padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .date {
@@ -42,8 +56,12 @@
     text-align: center;
     min-height: 50px;
     font-size: small;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .list {
     width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
 }

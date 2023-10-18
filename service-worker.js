@@ -9,6 +9,7 @@ import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 import { Logger } from '@lib/clientLogger.js'
 import { MovieService } from '@lib/movieService.js'
 import { DatabaseService } from '@lib/dbService.js'
+const dayjs = require('dayjs')
 
 skipWaiting();
 clientsClaim();
@@ -58,20 +59,13 @@ self.addEventListener('fetch', event => {
 
 // Refresh data when the app wakes up
 self.addEventListener("activate", (event) => {
-    Logger.log(`SW:activate`)
+    console.log(`SW:activate`)
+    MovieService.refresh_movies()
     var today = dayjs()
-    let keys = DatabaseService.getAllMovieIDs()
-    keys.map((key) => {
-        Logger.log(`SW:activate:get_movie:${key}`)
-        MovieService.get_movie(key)
-    })
-    Logger.log(`SW:activate:get:${today.month()}`)
+    // console.log(`SW:activate:get:${today.month()}`)
     MovieService.get(today.month())
-    Logger.log(`SW:activate:get_movie_watch_list`)
-    (async () => {
-        await DatabaseService.clearMovieWatchlist()
-        MovieService.get_movie_watch_list()
-    })
+    // console.log(`SW:activate:get_movie_watch_list`)
+    MovieService.resync_movie_watch_list()
 });
 
 const bgSyncPlugin = new BackgroundSyncPlugin('movieUpdates', {
