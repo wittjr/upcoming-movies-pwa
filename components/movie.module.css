@@ -4,7 +4,10 @@
     max-width: 250px;
     justify-content: center;
     align-content: flex-start;
-    /* padding: 10px; */
+    margin: 15px 20px;
+    border-color: lightgrey;
+    border-width: 1px;
+    border-style: solid;
 }
 
 .buttonRow {
@@ -18,7 +21,13 @@
 }
 
 .poster {
-    height: 330px;
+    /* height: 330px; */
+    width: 250px;
+}
+
+.releaseBox {
+    width: 100%;
+    padding: 10px 25px;
 }
 
 .title {
@@ -62,6 +71,4 @@
 
 .list {
     width: 100%;
-    padding-left: 10px;
-    padding-right: 10px;
 }

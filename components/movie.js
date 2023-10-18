@@ -71,25 +71,31 @@ export default function Movie(props) {
                     </div>
                     
                     {data.limited_release_date && (
-                        <ul key={data.id + '-limited'} className={styles.list}>
-                            <li>Type: Theatrical (Limited)</li>
-                            <li>Date: {data.limited_release_date}</li>
-                            <li>Rating: {data.limited_certification}</li>
-                        </ul>
+                        <div className={styles.releaseBox}>
+                            <ul key={data.id + '-limited'} className={styles.list}>
+                                <li>Type: Theatrical (Limited)</li>
+                                <li>Date: {data.limited_release_date}</li>
+                                <li>Rating: {data.limited_certification}</li>
+                            </ul>
+                        </div>
                     )}
                     {data.theatrical_release_date && (
-                        <ul key={data.id + '-theatrical'} className={styles.list}>
-                            <li>Type: Theatrical</li>
-                            <li>Date: {data.theatrical_release_date}</li>
-                            <li>Rating: {data.theatrical_certification}</li>
-                        </ul>
+                        <div className={styles.releaseBox}>
+                            <ul key={data.id + '-theatrical'} className={styles.list}>
+                                <li>Type: Theatrical</li>
+                                <li>Date: {data.theatrical_release_date}</li>
+                                <li>Rating: {data.theatrical_certification}</li>
+                            </ul>
+                        </div>
                     )}
                     {data.digital_release_date && (
-                        <ul key={data.id + '-digital'} className={styles.list}>
-                            <li>Type: Digital</li>
-                            <li>Date: {data.digital_release_date}</li>
-                            <li>Rating: {data.digital_certification}</li>
-                        </ul>
+                        <div className={styles.releaseBox}>
+                            <ul key={data.id + '-digital'} className={styles.list}>
+                                <li>Type: Digital</li>
+                                <li>Date: {data.digital_release_date}</li>
+                                <li>Rating: {data.digital_certification}</li>
+                            </ul>
+                        </div>
                     )}
                     {data['watch/providers'] && data['watch/providers'].results && data['watch/providers'].results.US && Object.keys(data['watch/providers'].results.US) && Object.keys(data['watch/providers'].results.US).map(d => (
                         // console.log(d)
