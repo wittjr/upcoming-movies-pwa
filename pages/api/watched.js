@@ -4,13 +4,24 @@ import { getToken } from 'next-auth/jwt';
 import { Logger } from '@lib/logger.js';
 
 export default async function handler(req, res) {
-    Logger.log("api/lists");
+    Logger.log(req.query)
+    const { start_at } = req.query
 
     const session = await getServerSession(req, res, authOptions)
     const token = await getToken({ req, encryption: true });
 
+    let url = `https://api.trakt.tv/users/${token.username}/history/movies?limit=50`
+    if (start_at) {
+        Logger.log(`api/watched?start_at=${start_at}`)
+        url += `&start_at=${start_at}`
+    } else {
+        Logger.log(`api/watched`)
+    }
+    Logger.log(url)
+
     if (session) {
-        const response = await fetch(`https://api.trakt.tv/users/${token.username}/history/movies?limit=50&start_at=2024-01-01`, {
+        // const response = await fetch(`https://api.trakt.tv/users/${token.username}/history/movies?limit=50`, {
+        const response = await fetch(url, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token.accessToken,

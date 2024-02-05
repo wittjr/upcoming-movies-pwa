@@ -14,6 +14,7 @@ export default function MovieButtons({stateChanger, data}) {
     const watched = async () => {
         let newData = { ...data }
         newData.watchlist = 0
+        newData.watched = 1
         const response = await fetch(`/api/watched/${newData.imdb_id}`, {
             method: 'POST'
         })
@@ -62,19 +63,15 @@ export default function MovieButtons({stateChanger, data}) {
             "focus:ring-2",
             "focus:ring-opacity-75"
         ]
-        let blueButton = [
-            "bg-blue-500",
-            "text-white",
-            "hover:bg-blue-700",
-            "zfocus:ring-blue-400",
-        ].concat(classList).join(" ")
-        let watchLabel = 'Watchlist+'
-        let watchButtonColor = [
+        let blueButtonBase = [
             "bg-blue-500",
             "text-white",
             "hover:bg-blue-700",
             "zfocus:ring-blue-400",
         ]
+        let blueButton = [...blueButtonBase].concat(classList).join(" ")
+        let watchLabel = 'Watchlist+'
+        let watchButtonColor = [...blueButtonBase]
         if (data.watchlist && data.watchlist == 1) {
             watchLabel = 'Watchlist-'
             watchButtonColor = [
@@ -84,11 +81,25 @@ export default function MovieButtons({stateChanger, data}) {
                 "zfocus:ring-red-400",
             ]
         }
+        let watchedButtonColor = [...blueButtonBase]
+        let watchedDisable = ''
+        if (data.watched && data.watched == 1) {
+            watchedDisable = 'disabled'
+            watchedButtonColor = [
+                "bg-red-500",
+                "text-white",
+                "hover:bg-red-700",
+                "zfocus:ring-red-400",
+                "cursor-not-allowed",
+                "disabled:opacity-75",
+                "disabled:bg-red-500"
+            ]
+        }
         return (
             <>
                 <button className={blueButton} onClick={ignore}>Ignore</button>
                 <button className={watchButtonColor.concat(classList).join(" ")} onClick={interested}>{watchLabel}</button>
-                <button className={blueButton} onClick={watched}>Watched</button>
+                <button disabled={watchedDisable} className={watchedButtonColor.concat(classList).join(" ")} onClick={watched}>Watched</button>
             </>
         )
     } else {

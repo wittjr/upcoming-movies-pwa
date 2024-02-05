@@ -52,6 +52,7 @@ export default function MoviesPage() {
         } else {
             start = dayjs().day(2).subtract(7, 'day').day(2).hour(0).minute(0).second(0).millisecond(0)
             end = dayjs().date(daysInMonth(dayjs().month(), dayjs().year)).hour(23).minute(59).second(59).millisecond(999)
+            MovieService.get_movie_watch_history_from_date(dayjs(start).date(1).format('YYYY-MM-DD'))
         }
 
         Logger.log(`Init: ${initialMonth}/${month} Start: ${start.format('YYYY-MM-DD')} End: ${end.format('YYYY-MM-DD')}`)
