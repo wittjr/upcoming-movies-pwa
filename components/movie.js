@@ -5,14 +5,15 @@ import MovieButtons from "./movieButtons"
 // import { DBService } from '@lib/db.js';
 import { Logger } from '@lib/clientLogger.js';
 
-const dayjs = require('dayjs')
-var isBetween = require('dayjs/plugin/isBetween')
-var isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
-dayjs.extend(isBetween)
-dayjs.extend(isSameOrBefore)
+// const dayjs = require('dayjs')
+// var isBetween = require('dayjs/plugin/isBetween')
+// var isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
+// dayjs.extend(isBetween)
+// dayjs.extend(isSameOrBefore)
 
 export default function Movie(props) {
     const [data, setData] = useState(props.data)
+    const page = props.page
 
     // useEffect(() => {
     //     const fetchData = async () => {
@@ -31,6 +32,11 @@ export default function Movie(props) {
     const provider_types = ['flatrate', 'buy', 'rent']
 
     const release_types = ['', '', 'Theatrical (Limited)', 'Theatrical', 'Digital']
+
+    let showIgnore = true
+    if (['/lists', '/'].includes(page)) {
+        showIgnore = false
+    }
 
     // Logger.log(data)
     if (data && data.ignore != true) {
@@ -67,7 +73,7 @@ export default function Movie(props) {
                         }
                     </div>
                     <div className={styles.buttonRow}>
-                            <MovieButtons stateChanger={setData} data={data}/>
+                            <MovieButtons stateChanger={setData} data={data} showIgnore={showIgnore} />
                     </div>
                     
                     {data.limited_release_date && (
@@ -107,7 +113,37 @@ export default function Movie(props) {
                 </div>
             )
         } else {
-            return null
+            return (
+                <div className={styles.movie}>
+                    <img className={styles.poster} src={poster_path}></img>
+                    <div className={[styles.title, styles.row].join(' ')}>{data.title}</div>
+                    <div className={[styles.overview, styles.row].join(' ')}>{data.overview}</div>
+                    <div className={styles.row}>
+                        <span className={styles.label}>Genre(s):</span>
+                        <span>&nbsp;&nbsp;</span>
+                        <span>{data.genres.reduce((v, g) => {
+                            if (v.length == 0) {
+                                return g.name
+                            } else {
+                                return v + ', ' + g.name
+                            }
+                        }, '')}</span>
+                    </div>
+                    <div className={styles.row}>
+                        <span className={styles.label}>Runtime:</span>
+                        <span>&nbsp;&nbsp;</span>
+                        {data.runtime == 0 && 
+                            <span>-</span>
+                        }
+                        {data.runtime != 0 &&
+                            <span>{data.runtime} minutes</span>
+                        }
+                    </div>
+                    <div className={styles.buttonRow}>
+                            <MovieButtons stateChanger={setData} data={data} showIgnore={showIgnore} />
+                    </div>
+                </div>
+            )
         }
     } else {
         return null;

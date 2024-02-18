@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { DatabaseService } from '@lib/dbService.js'
 import './movieButtons.module.css'
+import { Logger } from '@lib/clientLogger.js'
 
-export default function MovieButtons({stateChanger, data}) {
+export default function MovieButtons({stateChanger, data, showIgnore}) {
 
     const ignore = () => {
         let newData = { ...data }
@@ -27,9 +28,9 @@ export default function MovieButtons({stateChanger, data}) {
 
     const interested = async () => {
         let newData = { ...data }
-        console.log(data)
+        // Logger.log(data)
         if (data.watchlist && data.watchlist == 1) {
-            console.log('remove from watchlist')
+            Logger.log('remove from watchlist')
             newData.watchlist = 0
             const response = await fetch(`/api/watchlist/${newData.imdb_id}`, {
                 method: 'DELETE'
@@ -38,7 +39,7 @@ export default function MovieButtons({stateChanger, data}) {
                 throw new Error('API Issue')
             }
         } else {
-            console.log('add to watchlist')
+            Logger.log('add to watchlist')
             newData.watchlist = 1
             const response = await fetch(`/api/watchlist/${newData.imdb_id}`, {
                 method: 'POST'
@@ -47,7 +48,7 @@ export default function MovieButtons({stateChanger, data}) {
                 throw new Error('API Issue')
             }
         }
-        console.log(data)
+        // console.log(data)
         DatabaseService.put('movies', newData)
         stateChanger(newData)
     }
@@ -97,7 +98,9 @@ export default function MovieButtons({stateChanger, data}) {
         }
         return (
             <>
-                <button className={blueButton} onClick={ignore}>Ignore</button>
+                {showIgnore &&
+                    <button className={blueButton} onClick={ignore}>Ignore</button>
+                }                
                 <button className={watchButtonColor.concat(classList).join(" ")} onClick={interested}>{watchLabel}</button>
                 <button disabled={watchedDisable} className={watchedButtonColor.concat(classList).join(" ")} onClick={watched}>Watched</button>
             </>

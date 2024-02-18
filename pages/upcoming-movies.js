@@ -55,7 +55,7 @@ export default function MoviesPage() {
             MovieService.get_movie_watch_history_from_date(dayjs(start).date(1).format('YYYY-MM-DD'))
         }
 
-        Logger.log(`Init: ${initialMonth}/${month} Start: ${start.format('YYYY-MM-DD')} End: ${end.format('YYYY-MM-DD')}`)
+        // Logger.log(`Init: ${initialMonth}/${month} Start: ${start.format('YYYY-MM-DD')} End: ${end.format('YYYY-MM-DD')}`)
         const query = await DatabaseService.getAllMovies(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'))
         // Logger.log(query)
         let results = Array.from(new Set(query[0].concat(query[1])))
@@ -152,7 +152,7 @@ export default function MoviesPage() {
                     content && content.map(movie => {
                         // Logger.log(movie)
                         return (
-                            <Movie key={movie.id + '-' + movie.release_type + '-' +  movie.release_date} data={movie}></Movie>
+                            <Movie key={movie.id + '-' + movie.release_type + '-' +  movie.release_date} data={movie} page={window.location.pathname}></Movie>
                         )
                     })
                 }
