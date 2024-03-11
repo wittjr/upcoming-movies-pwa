@@ -4,7 +4,7 @@ import { getToken } from 'next-auth/jwt';
 import { Logger } from '@lib/logger.js';
 
 export default async function handler(req, res) {
-    Logger.log("api/lists");
+    Logger.log("api/watchlist");
 
     const session = await getServerSession(req, res, authOptions)
     // const token = await getToken({ req });
@@ -27,6 +27,7 @@ export default async function handler(req, res) {
             throw new Error('API Issue')
         }
         const data = await response.json();
+        // Logger.log(data)
 
         return res.send([
             ...data,

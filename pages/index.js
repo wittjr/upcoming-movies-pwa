@@ -19,15 +19,7 @@ export default function Home() {
     }, [content])
 
     const fetchData = async () => {
-        const results = await DatabaseService.getMovieUpcomingWatchlist()
-        let upcoming_movies = []
-        for (let i=0; i<results.length; i++) {
-            let details = await DatabaseService.getMovie(results[i])
-            if (details) {
-                upcoming_movies.push(structuredClone(details))
-            }
-        }
-
+        const upcoming_movies = await DatabaseService.getMovieUpcomingWatchlist()
         const dayjs = require('dayjs-with-plugins')
         var isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
         dayjs.extend(isSameOrBefore)
@@ -44,9 +36,14 @@ export default function Home() {
         })
     }
 
+    let titleClassList = [
+        "font-bold",
+        "text-4xl"
+    ].join(" ")
+
     return (
         <>
-            <h1>Upcoming List</h1>
+            <span className={titleClassList}>In Theater and Upcoming</span>
             <div className="movie-section">
                 {
                     content && content['upcoming'] && content['upcoming'].map(movie => {
