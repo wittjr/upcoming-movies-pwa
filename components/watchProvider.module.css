@@ -23,3 +23,7 @@
     display: block;
     z-index: 1;
 }
+
+.provider_disable {
+    opacity: 20%;
+}
