@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth/next"
-import { authOptions } from "pages/api/auth/[...nextauth]"
+import { authOptions } from "@pages/api/auth/[...nextauth]"
 import { withAuth } from "next-auth/middleware"
 import { getToken } from 'next-auth/jwt';
 import { Logger } from '@lib/logger.js';
@@ -21,7 +21,7 @@ async function handler(req, res) {
             date.getFullYear(),
         ];
         var today = year + '-' + month + '-' + day
-        Logger.log(today)
+        // Logger.log(today)
         // Logger.log(session)
         // Logger.log(JSON.stringify(authOptions) )
         // const response = await got.get('https://api.trakt.tv/users/settings', {
@@ -39,9 +39,8 @@ async function handler(req, res) {
                 'trakt-api-version': '2',
                 'trakt-api-key': process.env.TRAKT_ID
             }
+        
         })
-        // Logger.log(response)
-
         const json = await response.json()
 
         // Logger.log(response)

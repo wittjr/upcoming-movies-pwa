@@ -1,6 +1,6 @@
 import { Logger } from '@lib/logger.js';
 import { getServerSession } from "next-auth/next"
-import { authOptions } from "pages/api/auth/[...nextauth]"
+import { authOptions } from "@pages/api/auth/[...nextauth]"
 import { getToken } from 'next-auth/jwt';
 
 async function handler(req, res) {

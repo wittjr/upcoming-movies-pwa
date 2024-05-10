@@ -1,4 +1,9 @@
 export class Provider {
+    id: string
+    name: string
+    logo_path: string
+    ignored: boolean
+    
     constructor(id, name, logo_path, ignored=false) {
         this.id = id
         this.name = name

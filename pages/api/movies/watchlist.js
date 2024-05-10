@@ -1,5 +1,5 @@
 import { getToken } from 'next-auth/jwt';
-import { getMovieDetails } from '/pages/api/movies/[movie_id]'
+import { getMovieDetails } from '@pages/api/movies/[movie_id]'
 import { Logger } from '@lib/logger.js'
 
 const fetcher = (url) => fetch(url).then((res) => res.json());

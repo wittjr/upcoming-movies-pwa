@@ -16,8 +16,8 @@ class ProviderService {
         const data = await DatabaseService.get(Constants.PROVIDER_TABLESPACE, inputData.provider_id)
         if (data) {
             const provider = new Provider(data.id, data.provider_name, data.provider_logo_path, inputData.ignored)
-            provider.ignored(ignored)
-            DatabaseService.put(Constants.PROVIDER_TABLESPACE, provider, provider_id)
+            provider.ignored = !inputData.ignored
+            DatabaseService.put(Constants.PROVIDER_TABLESPACE, provider, inputData.provider_id)
             return provider
         } else {
             console.log('here')
