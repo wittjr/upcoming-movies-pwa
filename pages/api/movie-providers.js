@@ -5,7 +5,6 @@ export default async function handler(req, res) {
 
     const results = []
     const url = `https://api.themoviedb.org/3/watch/providers/movie?language=en-US&watch_region=US`
-    // const url = `https://api.themoviedb.org/3/watch/providers/movie?language=en-US`
     const options = {
         method: 'GET',
         headers: {

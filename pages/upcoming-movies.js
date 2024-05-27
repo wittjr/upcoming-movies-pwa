@@ -109,28 +109,13 @@ export default function MoviesPage() {
         }
         return undefined
     }
- 
-    let buttonClassList = [
-        "py-2",
-        "px-4",
-        "font-semibold",
-        "rounded-lg",
-        "shadow-md",
-        "focus:outline-none",
-        "focus:ring-2",
-        "focus:ring-opacity-75",
-        "bg-green-900",
-        "text-white",
-        "hover:bg-green-700",
-        "zfocus:ring-green-400",
-    ].join(" ")
 
     return (
         <>
-            <h1>Upcoming Movies</h1>
+            <span class="title">Upcoming Movies</span>
             <div>
-                {!isCurrentMonth() && (<button className={buttonClassList} onClick={prevMonth}>Previous Month</button>)}
-                <button className={buttonClassList} onClick={nextMonth}>Next Month</button>
+                {!isCurrentMonth() && (<button onClick={prevMonth}>Previous Month</button>)}
+                <button onClick={nextMonth}>Next Month</button>
             </div>
             <div className="movie-section">
                 {
@@ -143,8 +128,8 @@ export default function MoviesPage() {
                 }
             </div>
             <div>
-                {!isCurrentMonth() && (<button className={buttonClassList} onClick={prevMonth}>Previous Month</button>)}
-                <button className={buttonClassList} onClick={nextMonth}>Next Month</button>
+                {!isCurrentMonth() && (<button onClick={prevMonth}>Previous Month</button>)}
+                <button onClick={nextMonth}>Next Month</button>
             </div>
         </>
     )

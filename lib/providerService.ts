@@ -1,34 +1,26 @@
 import { DatabaseService } from '@lib/dbService.js'
 import { Logger } from '@lib/clientLogger.js'
 import * as Constants from '@lib/constants'
-import {Provider} from '@lib/provider'
-
 
 class ProviderService {
-    addProvider(provider_name, provider_id, provider_logo_path, ignored=false) {
-        const provider = new Provider(provider_id, provider_name, provider_logo_path, ignored)
-        DatabaseService.put(Constants.PROVIDER_TABLESPACE, provider, provider_id)
-        return provider
+
+    async addProvider(id: number) {
+        await DatabaseService.put(Constants.PROVIDER_TABLESPACE, {id: id})
     }
 
-    async updateProvider(inputData) {
-        console.log(inputData)
-        const data = await DatabaseService.get(Constants.PROVIDER_TABLESPACE, inputData.provider_id)
+    async removeProvider(id: number) {
+        const data = await DatabaseService.get(Constants.PROVIDER_TABLESPACE, id)
         if (data) {
-            const provider = new Provider(data.id, data.provider_name, data.provider_logo_path, inputData.ignored)
-            provider.ignored = !inputData.ignored
-            DatabaseService.put(Constants.PROVIDER_TABLESPACE, provider, inputData.provider_id)
-            return provider
-        } else {
-            console.log('here')
-            // const provider = new Provider(inputData.id, data.provider_name, data.provider_logo_path, data.ignored)
-            // DatabaseService.put(Constants.PROVIDER_TABLESPACE, provider, provider_id)
+            await DatabaseService.delete(Constants.PROVIDER_TABLESPACE, id)
         }
-        return undefined
     }
 
-    getIgnoredProviders() {
-
+    async checkProvider(id: number): Promise<boolean> {
+        let data = await DatabaseService.get(Constants.PROVIDER_TABLESPACE, id)
+        if (data) {
+            return true
+        }
+        return false
     }
 }
 

@@ -1,14 +1,9 @@
-// import React, { useState } from "react";
-// import Layout from "@components/layout"
 import Movie from "@components/movie"
-// import { useSession } from "next-auth/react"
 import { useState, useEffect } from "react"
 import { DatabaseService } from '@lib/dbService.js'
-// import { MovieService } from '@lib/movieService.js'
 import { Logger } from '@lib/clientLogger.js'
 
 export default function Home() {
-    // const [showModal, setShowModal] = useState(false);
     const [content, setContent] = useState()
 
     useEffect(() => {
@@ -36,14 +31,9 @@ export default function Home() {
         })
     }
 
-    let titleClassList = [
-        "font-bold",
-        "text-4xl"
-    ].join(" ")
-
     return (
         <>
-            <span className={titleClassList}>In Theater and Upcoming</span>
+            <span class="title">In Theater and Upcoming</span>
             <div className="movie-section">
                 {
                     content && content['upcoming'] && content['upcoming'].map(movie => {
@@ -54,29 +44,5 @@ export default function Home() {
                 }
             </div>
         </>
-
-
-        // <div className="container">
-        //     <Head>
-        //         <title>Next.js Starter!</title>
-        //         <link rel="icon" href="/favicon.ico" />
-        //     </Head>
-
-        //     <main>
-        //         <Header title="Welcome to my app!" />
-        //         <p className="description">
-        //             Get started by editing <code>pages/index.js</code>
-        //         </p>
-        //         <p>
-        //             <a href="https://api.trakt.tv/oauth/authorize?response_type=code&client_id=7e22162f9eb4579e79453681c2a03590c1ebee89a79c422574c7f59bc6d462db&redirect_uri=https://bucolic-bombolone-57352b.netlify.app/api/authorize">Login to Trakt</a>
-        //         </p>
-        //         <div id="modal-root"></div>
-        //         <div>
-        //             <button onClick={() => setShowModal(true)}>Login</button>
-        //         </div>
-        //     </main>
-
-        //     <Footer />
-        // </div>
     )
 }

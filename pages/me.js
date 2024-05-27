@@ -69,26 +69,18 @@ export default function MePage() {
     }
 
     const allProviders = []
-    // for (var i=0; i<movieProviders.length; i++) {
 
-    // }
-
-    const userProviders = []
-    
     return (
         <>
             {/* <WatchProviderList key="tvProviders" type="TV" items={tvProviders}></WatchProviderList> */}
-            <WatchProviderList key="movieProviders" type="Movie" items={movieProviders}></WatchProviderList>
+            <WatchProviderList key="movieProviders" type="Movie" items={movieProviders} showDisabled="true"></WatchProviderList>
 
-            {/* {
-                content &&
-                    <p>{content.user.username}</p>
-            } */}
-            <PrettyPrintJson data={content} />
+            {/* <PrettyPrintJson data={content} /> */}
             {/* <PrettyPrintJson data={tvProviders} /> */}
-            <PrettyPrintJson data={movieProviders} />
-            <button onClick={clearMovies}>Clear Movie Data</button>
-            <button onClick={clearDatabase}>Delete Database</button>
+            <div>
+                <button onClick={clearMovies}>Clear Movie Data</button>&nbsp;&nbsp;
+                <button onClick={clearDatabase}>Delete Database</button>
+            </div>
         </>
     )
 }

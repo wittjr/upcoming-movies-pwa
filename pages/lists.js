@@ -12,6 +12,9 @@ dayjs.extend(isSameOrBefore)
 export default function ListsPage() {
     const [content, setContent] = useState()
     const [releaseDates, setReleaseDates] = useState()
+    const [expandedPast, setExpandedPast] = useState(false)
+    const [expandedPresent, setExpandedPresent] = useState(true)
+    const [expandedFuture, setExpandedFuture] = useState(false)
 
     useEffect(() => {
         fetchData()
@@ -84,36 +87,42 @@ export default function ListsPage() {
 
     return (
         <>
-            <h1>Watch List</h1>
-            <div className="movie-section">
-                {
-                    content && content['released'] && content['released'].map(movie => {
-                        return (
-                            <Movie key={movie.id + '-' +  movie.release_date} id={movie.id + '-' +  movie.release_date} data={movie} page={window.location.pathname}></Movie>
-                        )
-                    })
-                }
-            </div>
-            <h1>Upcoming List</h1>
-            <div className="movie-section">
-                {
-                    content && content['upcoming'] && content['upcoming'].map(movie => {
-                        return (
-                            <Movie key={movie.id + '-' +  movie.release_date} id={movie.id + '-' +  movie.release_date} data={movie} page={window.location.pathname}></Movie>
-                        )
-                    })
-                }
-            </div>
-            <h1>Future List</h1>
-            <div className="movie-section">
-                {
-                    content && content['future'] && content['future'].map(movie => {
-                        return (
-                            <Movie key={movie.id + '-' +  movie.release_date} id={movie.id + '-' +  movie.release_date} data={movie} page={window.location.pathname}></Movie>
-                        )
-                    })
-                }
-            </div>
+            <span class="title" onClick={() => setExpandedPast(!expandedPast)}>Watch List</span>
+            {expandedPast &&
+                <div className="movie-section">
+                    {
+                        content && content['released'] && content['released'].map(movie => {
+                            return (
+                                <Movie key={movie.id + '-' +  movie.release_date} id={movie.id + '-' +  movie.release_date} data={movie} page={window.location.pathname}></Movie>
+                            )
+                        })
+                    }
+                </div>
+            }
+            <span class="title" onClick={() => setExpandedPresent(!expandedPresent)}>Upcoming List</span>
+            {expandedPresent &&
+                <div className="movie-section">
+                    {
+                        content && content['upcoming'] && content['upcoming'].map(movie => {
+                            return (
+                                <Movie key={movie.id + '-' +  movie.release_date} id={movie.id + '-' +  movie.release_date} data={movie} page={window.location.pathname}></Movie>
+                            )
+                        })
+                    }
+                </div>
+            }
+            <span class="title" onClick={() => setExpandedFuture(!expandedFuture)}>Future List</span>
+            {expandedFuture &&
+                <div className="movie-section">
+                    {
+                        content && content['future'] && content['future'].map(movie => {
+                            return (
+                                <Movie key={movie.id + '-' +  movie.release_date} id={movie.id + '-' +  movie.release_date} data={movie} page={window.location.pathname}></Movie>
+                            )
+                        })
+                    }
+                </div>
+            }
         </>
     )
 }
