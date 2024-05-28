@@ -8,7 +8,7 @@ import WatchProviderList from "@components/watchProviderList";
 
 export default function MePage() {
     const { data, status } = useSession()
-    const [content, setContent] = useState()
+    // const [content, setContent] = useState()
     // const [tvProviders, setTvProviders] = useState()
     const [movieProviders, setMovieProviders] = useState()
 
@@ -16,15 +16,16 @@ export default function MePage() {
         fetchData()
     }, [])
 
-    useEffect(() => {
-    }, [content])
+    // useEffect(() => {
+    // }, [content])
 
     const fetchData = async () => {
-        const res = await fetch("/api/me")
-        const json = await res.json()
-        if (json.content) {
-            setContent(json.content)
-        }
+        // const res = await fetch('/api/me')
+        // const json = await res.json()
+        // Logger.log(json)
+        // if (json.content) {
+        //     setContent(json.content)
+        // }
 
         // const tvProviders = await fetch("/api/tv-providers")
         // const tvData = await tvProviders.json()
@@ -32,10 +33,11 @@ export default function MePage() {
         //     setTvProviders(tvData.content)
         // }
 
-        const movieProviders = await fetch("/api/movie-providers")
+        const movieProviders = await fetch('/api/movie-providers')
         const movieData = await movieProviders.json()
-        if (movieData.content) {
-            setMovieProviders(movieData.content)
+        // Logger.log(movieData)
+        if (movieData.length > 0) {
+            setMovieProviders(movieData)
         }
     }
 

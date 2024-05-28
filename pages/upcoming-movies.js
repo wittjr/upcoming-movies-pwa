@@ -112,7 +112,7 @@ export default function MoviesPage() {
 
     return (
         <>
-            <span class="title">Upcoming Movies</span>
+            <span className="title">Upcoming Movies</span>
             <div>
                 {!isCurrentMonth() && (<button onClick={prevMonth}>Previous Month</button>)}
                 <button onClick={nextMonth}>Next Month</button>

@@ -33,7 +33,7 @@ export default function Home() {
 
     return (
         <>
-            <span class="title">In Theater and Upcoming</span>
+            <span className="title">In Theater and Upcoming</span>
             <div className="movie-section">
                 {
                     content && content['upcoming'] && content['upcoming'].map(movie => {

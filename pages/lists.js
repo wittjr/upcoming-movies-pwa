@@ -87,7 +87,7 @@ export default function ListsPage() {
 
     return (
         <>
-            <span class="title" onClick={() => setExpandedPast(!expandedPast)}>Watch List</span>
+            <span className="title" onClick={() => setExpandedPast(!expandedPast)}>Watch List</span>
             {expandedPast &&
                 <div className="movie-section">
                     {
@@ -99,7 +99,7 @@ export default function ListsPage() {
                     }
                 </div>
             }
-            <span class="title" onClick={() => setExpandedPresent(!expandedPresent)}>Upcoming List</span>
+            <span className="title" onClick={() => setExpandedPresent(!expandedPresent)}>Upcoming List</span>
             {expandedPresent &&
                 <div className="movie-section">
                     {
@@ -111,7 +111,7 @@ export default function ListsPage() {
                     }
                 </div>
             }
-            <span class="title" onClick={() => setExpandedFuture(!expandedFuture)}>Future List</span>
+            <span className="title" onClick={() => setExpandedFuture(!expandedFuture)}>Future List</span>
             {expandedFuture &&
                 <div className="movie-section">
                     {

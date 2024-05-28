@@ -4,11 +4,10 @@ import { authOptions } from "@pages/api/auth/[...nextauth]"
 import { getToken } from 'next-auth/jwt';
 
 async function handler(req, res) {
-    // console.log("api/logs");
+    Logger.log("api/logs")
 
     const session = await getServerSession(req, res, authOptions)
     const token = await getToken({ req, encryption: true })
-    // console.log(req.body)
     const message = req.body.message
     // console.log(message)
     if (session && token) {

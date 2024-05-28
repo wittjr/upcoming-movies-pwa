@@ -22,9 +22,6 @@ export default async function handler(req, res) {
     results.push(...data.results)
 
     res.setHeader('Cache-Control', 's-maxage=86400')
-    return res.send({
-        content:
-            results,
-    })
+    return res.send(results)
 
 }
