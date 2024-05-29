@@ -13,15 +13,22 @@ export default async function handler(req, res) {
         }
     }
 
-    var response = await fetch(url, options)
+    let response
+    try {
+        response = await fetch(url, options)
+    } catch (error) {
+        Logger.log(`Error in fetch for api/movie-providers: ${error}`)
+    }
     if (!response.ok) {
-        Logger.log(response)
+        Logger.log(response?.status)
+        Logger.log(response?.statusText)
         throw new Error('API Issue')
     }
+
     const data = await response.json()
     results.push(...data.results)
+    res.setHeader('Cache-Control', 's-maxage=86400')    
 
-    res.setHeader('Cache-Control', 's-maxage=86400')
     return res.send(results)
 
 }
