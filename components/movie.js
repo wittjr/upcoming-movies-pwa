@@ -2,30 +2,11 @@ import { useState, useEffect } from 'react'
 import styles from './movie.module.css'
 import WatchProviderList from "./watchProviderList"
 import MovieButtons from "./movieButtons"
-// import { DBService } from '@lib/db.js';
 import { Logger } from '@lib/clientLogger.js';
-
-// const dayjs = require('dayjs')
-// var isBetween = require('dayjs/plugin/isBetween')
-// var isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
-// dayjs.extend(isBetween)
-// dayjs.extend(isSameOrBefore)
 
 export default function Movie(props) {
     const [data, setData] = useState(props.data)
     const page = props.page
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         let newData = await DBService.getMovie(props.id)
-    //         setData(newData);
-    //     };
-    //     fetchData();
-
-    // }, [props.id]);
-
-    // useEffect(() => {
-    // }, [data]);
 
     var poster_path = 'https://placehold.co/220x330'
 
@@ -38,9 +19,7 @@ export default function Movie(props) {
         showIgnore = false
     }
 
-    // Logger.log(data)
     if (data && data.ignore != true) {
-        // console.log(data)
         if (data.poster_path) {
             poster_path = 'https://image.tmdb.org/t/p/original/' + data.poster_path
         }
@@ -104,11 +83,7 @@ export default function Movie(props) {
                         </div>
                     )}
                     {data['watch/providers'] && data['watch/providers'].results && data['watch/providers'].results.US && Object.keys(data['watch/providers'].results.US) && Object.keys(data['watch/providers'].results.US).map(d => (
-                        // console.log(d)
                         <WatchProviderList key={`${props.id}-${d}`} type={d} items={data['watch/providers'].results.US[d]}></WatchProviderList>
-                        // d != 'link' && data['watch/providers'].results.US[d].map(watch => (
-                        //     <WatchProvider key={d + '-' + watch.provider_id} provider={{...watch}}></WatchProvider>
-                        // ))
                     ))}
                 </div>
             )
