@@ -17,17 +17,27 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-        "@components/*": ["./components/*"],
-        "@lib/*": ["./lib/*"],
-        "@styles/*": ["./styles/*"],
-        "@pages/*": ["./pages/*"]
-      }  
+      "@components/*": [
+        "./components/*"
+      ],
+      "@lib/*": [
+        "./lib/*"
+      ],
+      "@styles/*": [
+        "./styles/*"
+      ],
+      "@pages/*": [
+        "./pages/*"
+      ]
+    },
+    "target": "ES2017"
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "pages/index.js"  ],
+    "**/*.tsx",
+    "pages/index.js"
+  ],
   "exclude": [
     "node_modules"
   ]
